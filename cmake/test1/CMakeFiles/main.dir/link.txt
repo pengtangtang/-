@@ -1,0 +1,1 @@
+/usr/bin/gcc      CMakeFiles/main.dir/main.c.o CMakeFiles/main.dir/test_func/test_func.c.o CMakeFiles/main.dir/test_func1/test_func1.c.o  -o main -rdynamic 

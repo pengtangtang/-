@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/farsight/Desktop/C++/cmake/test/main.c
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+strings.h
+-
+test_func.h
+/home/farsight/Desktop/C++/cmake/test/test_func.h
+test_func1.h
+/home/farsight/Desktop/C++/cmake/test/test_func1.h
+
+/home/farsight/Desktop/C++/cmake/test/test_func.h
+
+/home/farsight/Desktop/C++/cmake/test/test_func1.c
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+strings.h
+-
+test_func1.h
+/home/farsight/Desktop/C++/cmake/test/test_func1.h
+
+/home/farsight/Desktop/C++/cmake/test/test_func1.h
+
