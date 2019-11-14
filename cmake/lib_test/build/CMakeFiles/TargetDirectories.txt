@@ -1,0 +1,3 @@
+/home/farsight/Desktop/C++/cmake/lib_test/build/src/CMakeFiles/main.dir
+/home/farsight/Desktop/C++/cmake/lib_test/build/lib_testFunc/CMakeFiles/testFunc_shared.dir
+/home/farsight/Desktop/C++/cmake/lib_test/build/lib_testFunc/CMakeFiles/testFunc_static.dir

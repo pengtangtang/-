@@ -1,0 +1,1 @@
+/usr/bin/gcc      CMakeFiles/main.dir/main.c.o  -o ../../bin/main -rdynamic -L/home/farsight/Desktop/C++/cmake/lib_test/lib -ltestFunc -Wl,-rpath,/home/farsight/Desktop/C++/cmake/lib_test/lib 
