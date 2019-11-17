@@ -1,0 +1,12 @@
+after 237steps,the subject has the fallowing location (x,y) = (39.5185, -32.2363)
+
+or
+(m,a) = (50.9989, -0.684256)
+
+average outward distance per step = 0.215185
+after 300steps,the subject has the fallowing location (x,y) = (26.4608, 43.2994)
+
+or
+(m,a) = (50.7445, 1.02225)
+
+average outward distance per step = 0.169148
