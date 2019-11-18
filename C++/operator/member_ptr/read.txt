@@ -1,0 +1,29 @@
+
+
+成员解除引用运算符（* ->*）：
+
+1：引用实际的内存单元：结合标识符（数据成员）和特定的对象来引用实际的内存单元（对于成员函数可以省略，但对象被认为是指针指向的对象）
+
+2：成员指针与常规指针的区别
+	常规指针指向特定的内存单元
+	成员指针指的是成员在任意对象中的位置
+
+3:成员指针声明与定义：
+	int Example::*pt = &Example::inches;
+	Example obj;
+	cout << obj.*pt << endl;
+
+	Example *pr = new Example;
+	cout << pr->*pt << endl;
+
+4:成员指针的实质：
+	相当于一个成员名，可用于标识（相同类型的其他成员）
+
+5：成员函数指针
+	1）声明时必须指出该函数所属的类
+		void (Example::*pt)() const;
+	2）赋值
+		pt = &Example::show_inches;
+	3）使用
+		Exampel ob;
+		(ob.*pt)();
