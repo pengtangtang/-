@@ -1,0 +1,106 @@
+
+简介：CMake是一个跨平台的自动化建构系统，使用一个名为CMakeLists.txt文件来描述构建过程。linux平台下使用CMake生成Makefile并编译流程如下：
+
+1：编写CmakeLists.txt
+2:执行命令“cmake PATH”或者“ccmake PATH”生成Makefile(PATH是CMakeLists.txt所在路径)
+3：使用make命令进行编译
+
+
+实例：
+第一个工程：
+只有一个源文件main.cpp
+
+1、构建项目：编写CMakeLists.txt并将其与源文件放在同一目录下
+
+CMakeLists.txt
+PROJECT(main)#项目名称为main
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)#限定cmake版本
+AUX_SOURCE_DIRECTORY(. DIR_SRCS)#将当前目录中的源文件爱你名赋值给变量
+ADD_EXECTABLE(main ${DIR_SRCS})#指示变量中的源文件序哑ibianyicheng翁为main的可执行文件
+
+注意：aux_source_directory(<dir> <variable>)
+	camke [options] <path-to-souce>	 #ccmake提供图形化界面
+
+
+第二个工程：
+处理多个源文件
+
+源代码分布情况：
+./step2
+	+----main.cpp
+	+----src
+		+---Test1.h
+		+---Test1.cpp
+src目录下的文件要编译成一个链接库
+
+1、项目主目录中的CMakeLists.txt
+
+step2中的CMakeLists.txt
+PROJECT(main)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+ADD_SUBDIRECTORY(src)#表明本项目包含一个子项目
+AUX_SOURCE_DIRECTORY(. DIR_SRCS)
+ADD_EXECUTABLE(main ${DIR_SRCS})
+TARGET_LINK_LIBRARIES(main Test)#指明可执行文件main需要链接一个名为Test的链接库
+
+2、子目录中的CMakeLists.txt
+
+src中的CMakeLists.txt
+AUX_SOURCE_DIRECTORY(. DIR_TEST1_SRCS)
+ADD_LIBRARY(Test ${DIR_TEST1_SRCS})#将src的源文件编译为共享库
+
+3、在step2中执行命令make .
+首先解析目录step2中的CMakeLists.txt,当程序执行到add_subdirectory(src)是进入src对其中的CMakeLists.txt进行解析
+
+
+在工程中查找并使用其他程序库的方法：
+
+1、程序库说明文件
+
+在项目的根目录中创建目录camke/modules/,在此目录下创建文件Findlibdb_cxx.cmake
+
+Findlibdb_cxx.cmake#命名规范FindlibNAME.cmake
+MESSAGE(STATUS "Using bundled FIndlibdb.cmake")
+
+FIND_PATH(
+	LIBDB_CXX_INCLUDE_DIR
+	db_cxx.h
+	/usr/include/
+	/usr/local/include/
+	)
+FIND_LIBRARY(
+	LIBRARY_CXX_LIBRARIES NAMES db_cxx
+	PATHS /usr/lib/ /usr/local/lib/
+	)
+
+注意：MASSAGE会将参数的内容输出到终端
+
+      FIND_PATH指明头文件查找的路径
+      find_path(<VAR> name1 [path1 pth2 ..])
+      将在参数path*指示的目录中查找文件name1并将查到的路径保存在VAR中
+
+      FIND_LIBRARY同FIND_PATH类似，用于查找连接库并将结果保存在变量中
+
+2、项目根目录中的CMakeLists.txt
+
+PROJECT(main)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+SET(CMAKE_SOURCE_DIR .)
+SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)#表示在目录./cmake/modules中查找Findlibdb_cxx.cmake
+AUX_SOURCE_DIRECTORY(. DIR_SRCS)
+ADD_EXECUTABLE(main ${DIR_SRCS})
+
+FIND_PACKAGE(libdb_cxx REQUIRED)#使用FIND_PACKAGE进行查找且执行后cmake会在CMAKE_MODULE_PATH指示的目录查找Findlibdb_cxx.cmake
+MAKE_AS_ADVANCED(
+LIBDB_CXX_INCLUDE_DIR
+LIBDB_CXX_LIBRARIES
+)
+
+IF (LIBDB_CXX_INCLUDE_DIR AND LIBDB_CXX_LIBRARIES)#如果两个变量都被赋值则设置编译时到 LIBDB_CXX_INCLUDE_DIR 寻找头文件并且设置可执行文件 main 需要与链接库 LIBDB_CXX_LIBRARIES 进行连接
+(MESSAGE(STATUS "Found libdb libraries")
+	INCLUDE_DIRECTORIES(${LIBDB_CXX_INCLUDE_DIR})
+	MASSAGE(${LIBDB_CXX_LIBRARIES})
+	TARGET_LINK_LIBRARIES(main ${LIBDB_CXX_LIBRARIES})
+)
+ENDIF(LIBDB_CXX_INCLUDE_DIR AND LIBDB_CXX_LIBRRIES)
+
