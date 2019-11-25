@@ -1,0 +1,17 @@
+
+数组的替代品：
+	1：模板类vector
+		是一种动态数组,效率低但是安全方便
+		#include <vector>
+		using namespace std;
+		vector<typename> vt(n_elem);//n_elem可以是整形常量也可以是整形变量
+	2：模板类array
+		是静态数组，效率高但是不咋安全方便
+		#include <array>
+		array<typename,n_elem> arr;//n_elem必须是整形常量
+	
+三者区别：
+	1：三者都可用标准数组法来访问数组元素。
+	2：数组与array对象存储在相同的内存领域（栈），vector对象存储在（自由存储区或堆）
+	3：可以将一个array对象赋给另一个array对象，对于数组只能逐元素复制
+	4：array与vector对象可以使用at()函数进行元素操作，防止出现越界错误

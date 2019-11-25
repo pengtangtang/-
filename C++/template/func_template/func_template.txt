@@ -1,0 +1,39 @@
+
+提示：
+	1.如果需要多个将同一种算法用于不同类型的函数，请使用模板。如果不考虑向后兼容的问题，并愿意键入较长的单词，则声明类型参数时，应该使用关键字template而不实用class。
+
+	2.试图在同一个文件中使用同一种类型的显示具体化和显示实例化将出错。
+
+显示具体化模板：
+	为特定类型提供具体化的模板定义
+	1.原型和定义以template<>开头，通过名称指出类型
+	2.具体化优先于常规模板，而非模板优先于模板 (编译器选择原型顺序)
+	eg:void Swap(job &,job &);
+	
+	  template <typelame T>
+	  void Swap(T &,T &);
+
+	  template <> void Swap<job> (job &,job &);//<job>可选
+
+显示实例化与显示具体化的区别：
+	显示实例化：
+		声明时使用前缀template
+		template void Swap<int>(int,int)
+	显示具体化：
+		声明时使用前缀template<>
+		    template <> void Swap<int>(int &，int &)
+		    template <> void Swap(int &,int &)
+		使用：必须与函数模板一起使用，当定义的函数模板能处理大部分的类型，但有些特殊类型需要却与基本算法不同时，就需要使用显示具体化。
+
+关键字：decltype
+	decltype(expression) var;
+	1.若expression是一个没有用括号括起的标识符，则var的类型与该标识符的类型相同，包括const等限定符
+	2.若expression是一个函数调用，则var的类型与函数返回值的类型相同
+	3.若expression是一个左值，则var为其指向类型的引用
+	4.若前面三种情况都不符，则var的类型与expression类型相同
+	5.应用-----后置返回类型
+		template<class T1,class T2>
+		auto gt(T1 x, T2 x)->decltype(x+y)
+		{
+			return x+y;
+		}
