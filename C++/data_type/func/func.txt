@@ -1,0 +1,13 @@
+
+
+函数指针应用：
+	void f1(application *a);
+	const char* f2(const application* a1,const application* a2);
+
+	typedef void(*ff1)(application*);
+	ff1 p1 = f1;
+	typedef const char*(*ff2)(const application*,const application*);
+	ff2 p2 = f2;
+	
+	ff1 pa[5];
+	ff2 (*ap)[10];

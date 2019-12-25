@@ -1,0 +1,17 @@
+
+虚继承：
+	1：虚基类
+		使得多个类（他们的基类相同）派生出的对象只继承一个基类对象
+
+		class Singer:virtual public Worker{ };
+		class Waiter:virtual public Worker{ };
+
+		class SingerWaiter:public Singer,public Waiter{ };
+
+		SingerWaiter ed;
+		Worker *pw = &ed;
+
+	2:新的构造函数规则
+	  如果类有间接虚基类，则除非只需使用该虚基类的默认构造函数，否则必须显示调用该虚基类的某个构造函数
+	  eg:SingerWorker(const Worker &wk,int p =0,int v = Singer::other)
+		:Worker(wk),Waiter(wk,p),Singer(wk,v){}

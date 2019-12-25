@@ -1,0 +1,17 @@
+
+使用保护派生或私有派生时，基类的公有成员将成为保护成员或私有成员：
+	如何使基类方法在派生类外可用：
+	1：定义一个使用该基类方法的派生类方法
+	double Student::sum() const
+	{
+		return valarray<double>::sum();
+	}
+	2：将函数调用包装在另一个函数调用中（只适用于继承）
+	-----使用一个using声明(只使用成员名)来指出派生类可以使用特定的基类成员
+	class Student:private string,private valarray<double>
+	{
+		public:
+			using valarray<double>::min;
+			using valarray<double>::max;
+
+	}

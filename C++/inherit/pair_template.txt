@@ -1,0 +1,61 @@
+pair实现是一个结构体
+
+#include <utility>
+template<class T1,class T1> struct pair;/*T1 T2都是数据类型*/
+
+功能：将一对值组合成一个值
+
+具体用法：
+
+	1：实例化
+	pair<string,string> p1("hello","world");
+	pair<double,int> p2(1.0,1);
+	pair<double,int> p3(p2);
+
+	2:对象赋值及make_pair()应用
+	pair<string,string> p1;
+	pair<string,string> p2("hello","world");
+	p1 = p2;
+	p1 = make_pair("good","good");
+	p1 = pair<string,string>("nice","nice");
+
+	3:pair中元素访问
+	pair<double,int> p1(1.0,2);
+	pair<string,string> p2("hello","word");
+	int i = p1.second;
+	double d = p1.first;
+	string s1 = p2.first;
+
+使用场合：
+	1、当两个数需要放在一起保存的时候
+	2、当一个函数需要返回两个数据的时候
+
+实例：
+	读入一系列string和int数据，将每一组存储在一个pair对象，再将pair对象
+	存储在vector容器中
+
+#include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	pair<string,int> p;
+	typedef vector< pair<string,int> > VP;
+	VP vp;
+
+	for(int i = 0;i < 3;i++)
+	{
+		cin >> p.first >> p.second;
+		vp.push_back(make_pair(p.first,p.second));
+	}
+
+	VP::iterator it;
+	for(it = vp.begin();it != vp.end();it++)
+		cout << it->first << "," << it->second << endl;
+	return 0;
+}
+
+

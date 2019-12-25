@@ -9,6 +9,22 @@
 		是静态数组，效率高但是不咋安全方便
 		#include <array>
 		array<typename,n_elem> arr;//n_elem必须是整形常量
+	3:模板类valarray
+		与前面两个模板类类似，只是提供的算法比较多
+		valarray<typename> v1(n_elem)
+		eg:double gra[5] = {1.2,4.4,5.4,2.1,6.6};
+		   valarray<double> v1;
+		   valarray<int> v2(8);
+		   valarray<int> v3(10,8);//8个元素，每个元素初值为10
+		   valarray<double> v4(gra,4);//4个元素，用gra的前4个元素初始化
+		   valarray<int> v5 = {2,4,3,1,4};
+		类方法：
+			operator[]
+			size()
+			sum();
+			max();
+			min();
+
 	
 三者区别：
 	1：三者都可用标准数组法来访问数组元素。
