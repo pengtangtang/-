@@ -1,0 +1,23 @@
+
+vector:
+	动态数组----顺序表。在内存中分配一块连续的内存空间(动态分配，使用new和delete)
+
+	优点：可以不指定大小，使用push_back,pop_bak进行动态操作
+	      随机访问，支持[]操作符和vector.at()
+	      节省空间
+
+	缺点：在内部进行插入删除操作效率低
+	只能在vector的最后进行push和pop操作
+	当动态添加的数据超过vector默认分配的大小时要进行整体的重新分配、拷贝、释放
+
+	
+	方法：1）push_back()
+		vector<double> scores;
+		double temp;
+		while(cin >> temp && temp >=0)
+			scores.push_back(temp);
+		cout << scores.size() << endl;
+	      2)erase():删除矢量中给定区间的元素。接收两个迭代器参数，第一个指向区间的起始处，第二个位于区间终止处的后一个元素；
+			scores.erase(scores.begin(),scores.begin()+2);//删除begin() begin()+1
+	      3)insert()
+		old_v.insert(old_v.end(),new_v.begin(),new_v.end());//将新元素new_v插入到old_v.end()前面

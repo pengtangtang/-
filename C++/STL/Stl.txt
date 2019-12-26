@@ -1,0 +1,73 @@
+
+总结：
+	1）需要高效的随机存取，而不在乎插入与删除效率-----vector
+	2)需要大量的插入与删除，不关心随机存取-----list
+	3)即需要大量的随机存取，又关心两端数据的插入和删除---deque
+
+
+
+迭代器：itertor
+	定义:一个广义的指针。可以是指针，也可以是一个对其执行类似指针操作的对象
+
+	使用：1)vector<double>::iterator pd;
+		vector<double> score;
+		pd = score.begin();
+		*pd = 22.3;
+		pd++;
+
+		2)auto pd = vector<double> score.begin();//c++11自动类型推断
+
+	超过结尾：一种迭代器，指向容器最后一个元素后面的那个元素。
+		  end()成员函数标识超过结尾的位置
+		  使用：1）for(pd = score.begin();pd != score.end();pd++)
+		  		cout << *pd << endl;
+
+	注意：区间[it1,it2)由迭代器it1和it2指定，其范围为it1到it2不含it2。
+		因此[degin(),end()）包含容器所有内容
+
+
+STL函数：
+	1）for_each()
+		可用于很多容器类，接受三个参数，前两个是定义容器区间的迭代器，后一个是指向函数的指针（函数对象）。
+		将被指向的函数应用于容器区间的各个元素。被指向的函数不能修改容器元素的值。
+		可以代替for循环
+		如：vector<review>::iterator pr;
+		for(pr = books.begin();pr != books.end();pr++)
+			show_review(*pr);
+		替换为：
+		for_each(books.begin(),books.end(),show_review);
+
+
+
+	2)random_shuffle()//支持随机访问
+		指向两个指定区间的迭代器参数，并随机排列该区间中的元素；
+		random_shuffle(books.begin(),books.end())
+	
+	3）sort()
+	a:第一个版本：接受两个定义区间的迭代器参数，并使用“<”运算符，对区间元素进行操作//升序排列
+		vector<int> coolstuff;
+		sort(coolstuff.begin(),coolstuff.end());
+
+		若容器元素是用户定义的对象，则要使用sort()，必须定义能够处理该类型对象的operator <()函数
+		如：bool operator <(const review& r1,const revoew& r2)
+		    {
+		    	if(r1.title < r2.title)
+				return true;
+			else if(r1.title == r2.title && r1.rating < r2.rating)
+				return true ;
+			else
+				return false;
+		    }
+
+		sort(books.begin(),books.end())
+
+	b:第二个版本：接受三个参数，前两个是迭代器，最后一个是指向要使用的函数指针，而不是用于比较的<。
+
+		bool worse_than(const review& r1,const review& r2)
+		{
+			if(r1.rating < r2.rating)
+				return true;
+			else
+				return false;
+		}
+		sort(books.begin(),books.end(),worse_than)
