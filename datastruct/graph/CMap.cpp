@@ -294,19 +294,27 @@ int CMap::getMinEdge(vector<Edge> edgeVec)
 	return edgeIndex;
 }
 
+/*克鲁斯卡尔算法：以边为核心，找出最小生成树的边集合
+ * 算法：1：找出所有的边
+ * 	 2：找出组成最小生成树的边集合
+ * 	 	1）找到算法结束条件
+ * 	 	2）从边集合中找到最小边
+ * 	 	3）找出最小边连接的点
+ * 	 	4）找出点所在的点集合
+ * 	 	5）根据点所在集合的不同做出不同的处理(避免出现闭环问题，否则会违背最小生成树的原理)*/
 void CMap::kruskalTree()
 {
 	/*克鲁斯卡尔算法生成树，找出最小生成树边的集合*/
 	//定义存放结点集合的数组
 	int value = 0;
-	int edgeCount = 0;
-	//定义存放结点集合的数组
+	int edgeCount = 0;//最小生成树的边数
+	//定义存放结点集合的数组：所有的点可能不在同一集合
 	vector< vector<int> >  nodeSets;
 
 
-	//第一步：取出所有边：主对角线上半部分矩阵
-	vector<Edge> edgeVec;
-	for(int i = 0;i < m_iCapacity;i++)
+	//第一步：取出所有边：主对角线上半部分矩阵（无向图的临界矩阵是对称的，只需要取出一半就好了，不含对角线）
+	vector<Edge> edgeVec;//存放边的集合
+	for(int i = 0;i < m_iCapacity;i++)//将临界矩阵中关于边的描述，转换为Edge对象
 	{
 		for(int k = i+1;k < m_iCapacity;k++)
 		{
@@ -324,54 +332,62 @@ void CMap::kruskalTree()
 	while(edgeCount < m_iCapacity-1)
 	{
 	//2：从边集合中找到最小边
+	//1）从边集合中寻找出最小边
+	//2）将已选边标记为已选取状态
 	int minEdgeIndex = getMinEdge(edgeVec);
 	edgeVec[minEdgeIndex].m_bSelected = true;
 
 	//3：找到最小边连接的点
 	int nodeAIndex = edgeVec[minEdgeIndex].m_iNodeIndexA;
 	int nodeBIndex = edgeVec[minEdgeIndex].m_iNodeIndexB;
+
 	bool nodeAIsInSet = false;
 	bool nodeBIsInSet = false;
+
 	int nodeAInSetLabel = -1;
 	int nodeBInSetLabel = -1;
-	//4：找出点所在的点集合
+	//4：找出点所在的点集合？？好像是防止出现闭环问题---当两个顶点已经在一个集合中说明两个顶点已经访问过，再次访问会出现闭环问题，这就违背类最小生成树原理
+	//从所有的点集合中寻找两顶点所在集合
 	for(int i = 0;i < (int)nodeSets.size();i++)
-	{
+	{//A点所在点集合索引
 		nodeAIsInSet = isInSet(nodeSets[i],nodeAIndex);
 		if(nodeAIsInSet)
 		{
-			//nodeAInSetLabel = i;
-			nodeAIsInSet = i;		
+			nodeAInSetLabel = i;//顶点所在集合索引		
+			//nodeAIsInSet = i	
 		}
 	}
 	for(int i = 0;i < (int)nodeSets.size();i++)
-	{
+	{//B点所在点集合索引
 		nodeBIsInSet = isInSet(nodeSets[i],nodeBIndex);
 		if(nodeBIsInSet)
 		{
-			//nodeBInSetLabel = i;
-			nodeBIsInSet = i;
+			nodeAInSetLabel = i;//顶点所在集合索引		
+			//nodeBIsInSet = i;
 		}
 	}
 
 	//5：根据点所在集合的不同作出不同的处理
 	if(nodeAInSetLabel == -1 && nodeBInSetLabel == -1)
-	{
+	{//AB两点都没有在任意集合
 		vector<int> vec;
 		vec.push_back(nodeAIndex);
 		vec.push_back(nodeBIndex);
-		nodeSets.push_back(vec);
+		nodeSets.push_back(vec);//将新集合放入集合数组
 	}
 	else if(nodeAInSetLabel == -1 && nodeBInSetLabel != -1)
-	{
+	{//A点不在集合中，而B点已经在集合
+	 //将A点放入B点所在的点集合
 		nodeSets[nodeBInSetLabel].push_back(nodeAIndex);
 	}
 	else if(nodeAInSetLabel != -1 && nodeBInSetLabel == -1)
-	{
+	{//B点不在集合中，而B点已经在集合中
+	 //将B点放入A点所在集合
 		nodeSets[nodeAInSetLabel].push_back(nodeBIndex);
 	}
 	else if(nodeAInSetLabel != -1 && nodeAInSetLabel != -1 && nodeAInSetLabel != nodeBInSetLabel)
-	{
+	{//AB两点在不同的集合
+	 //将B点放入A点所在集合，并将B点在原来所在集合中删除
 		mergeNodeSet(nodeSets[nodeAInSetLabel],nodeSets[nodeBInSetLabel]);
 		for(int k = nodeBInSetLabel;k < (int)nodeSets.size()-1;k++)
 		{
@@ -379,10 +395,10 @@ void CMap::kruskalTree()
 		}
 	}
 	else if(nodeAInSetLabel != -1 && nodeBInSetLabel != -1 && nodeAInSetLabel == nodeBInSetLabel)
-	{
+	{//AB两点在同一集合
 		continue;
 	}
-	m_pEdge[edgeCount] = edgeVec[minEdgeIndex];
+	m_pEdge[edgeCount] = edgeVec[minEdgeIndex];//将最小权值边放入边集合
 	edgeCount++;
 
 	cout << edgeVec[minEdgeIndex].m_iNodeIndexA << "--" << edgeVec[minEdgeIndex].m_iNodeIndexB << " ";
