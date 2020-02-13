@@ -16,24 +16,6 @@
 #include "Edge.h"
 #include <vector>
 
-
-/*数据结构之图：
- * 属性：最大顶点容纳量  当前顶点数  顶点数组  临界矩阵（顶点间是否有边）  边集合（边的具体信息）
- * 方法：
- * 	公有方法：
- * 	 构造函数  析构函数  顶点添加函数  顶点重置函数  边权值设置函数（有向图与无向图）  临界矩阵打印函数
- * 	 深度优先遍历函数  广度优先遍历函数 最小生成树之普利姆算法函数  最小生成树之克鲁斯卡尔算法函数  
- * 	 私有方法：
- * 	  临界矩阵权值获取函数  广度优先本层顶点相关的下层顶点获取函数  边集合中最小边获取函数  顶点是否在点集合判断函数  顶点合并函数
- *
- *图所需的辅助类：
- 		顶点类：
-			属性：顶点数值  访问标志
-			方法：构造函数
-		边类：
-			属性：两个顶点  边的权值 访问标志
-			方法：构造函数*/
-
 class CMap{
 	public:
 		CMap(int capacity);
@@ -59,8 +41,6 @@ class CMap{
 		bool isInSet(vector<int> nodeSet,int target);//判断顶点是否在点集合中
 		void mergeNodeSet(vector<int>& nodeSetA,vector<int> nodeSetB);//合并两个顶点集合
 	private:
-
-		/*图包含的属性：最大顶点容纳量  当前顶点数  顶点数组  临界矩阵（顶点间的边关系）  边集合（边的具体信息）*/
 		int m_iCapacity;
 		int m_iNodeCount;
 		Node* m_pNodeArray;

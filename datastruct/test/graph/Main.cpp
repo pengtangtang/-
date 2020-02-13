@@ -1,9 +1,9 @@
 /*===============================================================
 *   Copyright (C) 2020 All rights reserved.
 *   
-*   文件名称：Demo.cpp
+*   文件名称：Main.cpp
 *   创 建 者：pengtangtang
-*   创建日期：2020年02月08日
+*   创建日期：2020年02月11日
 *   描    述：
 *
 *   更新日志：
@@ -11,31 +11,13 @@
 ================================================================*/
 using namespace std;
 #include <iostream>
-#include "Node.h"
 #include "CMap.h"
-#include <stdlib.h>
 
-int main(void)
+int main()
 {
-	/*图的遍历：无向图;临界矩阵遍历，广度和深度遍历
-	 * 		
-	 *			A
-	 *		      /   \
-	 *		      B   D
-	 *		     / \  /\
-	 *		    C  F G-H
-	 *		    \ /
-	 *		     E
-	 *		 A-B:1  A-D：1  B-C：1 B-F：1 D-G：1  D-H：1  G-H：1
-	 *		 C-E：1 F-E：1
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	CMap *pMap = new CMap(8);
-
+#if 0
+	CMap* pMap = new CMap(8);
+	
 	Node* pNodeA = new Node('A');
 	Node* pNodeB = new Node('B');
 	Node* pNodeC = new Node('C');
@@ -60,44 +42,28 @@ int main(void)
 	pMap->setValueToMatrixForUndirectedGraph(1,5);
 	pMap->setValueToMatrixForUndirectedGraph(3,6);
 	pMap->setValueToMatrixForUndirectedGraph(3,7);
-	pMap->setValueToMatrixForUndirectedGraph(6,7);
 	pMap->setValueToMatrixForUndirectedGraph(2,4);
 	pMap->setValueToMatrixForUndirectedGraph(2,5);
+	pMap->setValueToMatrixForUndirectedGraph(6,7);
 
 	pMap->printMatrix();
 	cout << endl;
 
-	pMap->resetNode();
-	pMap->depthFirstTraverse(3);
+	pMap->depthFirstTraverse(0);
 	cout << endl;
 
 	pMap->resetNode();
 	pMap->breadthFirstTraverse(0);
 	cout << endl;
-*/
-	/*普利姆算法*/
-
-/*算法：
-	 * 				   A
-	 	* 			/  |  \
-	 * 				B- F -E
-	 * 				\ / \ /
-	 * 				 C - D
-	 * 				 权值：
-	 * 				 A-B：6  A-E：5  A-F：1
-	 * 				 B-C：3  C-D：7
-	 * 				 D-F：4  D-E：2
-	 * 				 E-F：9
-	 * 				 普利姆算法最小生成树：A-F-B-C-D-E*/
+#else
 	CMap* pMap = new CMap(6);
-
+	
 	Node* pNodeA = new Node('A');
 	Node* pNodeB = new Node('B');
 	Node* pNodeC = new Node('C');
 	Node* pNodeD = new Node('D');
 	Node* pNodeE = new Node('E');
 	Node* pNodeF = new Node('F');
-
 
 	pMap->addNode(pNodeA);
 	pMap->addNode(pNodeB);
@@ -106,7 +72,6 @@ int main(void)
 	pMap->addNode(pNodeE);
 	pMap->addNode(pNodeF);
 
-	
 	pMap->setValueToMatrixForUndirectedGraph(0,1,6);
 	pMap->setValueToMatrixForUndirectedGraph(0,4,5);
 	pMap->setValueToMatrixForUndirectedGraph(0,5,1);
@@ -117,14 +82,18 @@ int main(void)
 	pMap->setValueToMatrixForUndirectedGraph(3,5,4);
 	pMap->setValueToMatrixForUndirectedGraph(3,4,2);
 	pMap->setValueToMatrixForUndirectedGraph(4,5,9);
-	
+
 
 	pMap->printMatrix();
-#if 0
+	cout << endl;
+
 	pMap->primTree(0);
-#else
+	pMap->resetNode();
+	cout << endl;
+
 	pMap->kruskalTree();
+	pMap->resetNode();
+	cout << endl;
 #endif
-	system("pause");
-	return 0;
+
 }

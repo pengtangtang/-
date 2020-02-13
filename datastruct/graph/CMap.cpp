@@ -206,7 +206,7 @@ void CMap::primTree(int nodeIndex)
 	m_pNodeArray[nodeIndex].m_blsVisited = true;
 
 
-	while(edgeCount < m_iCapacity-1)//判断所有的边是否已经遍历完
+	while(edgeCount < m_iCapacity-1)//（就是边于点的关系）判断所有的顶点是否已经遍历完全
 	{
 		int temp = nodeVec.back();
 
