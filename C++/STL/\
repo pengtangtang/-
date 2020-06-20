@@ -1,0 +1,35 @@
+/*===============================================================
+*   Copyright (C) 2020 All rights reserved.
+*   
+*   文件名称：permutation.cpp
+*   创 建 者：pengtangtang
+*   创建日期：2020年04月26日
+*   描    述：
+*
+*   更新日志：
+*
+================================================================*/
+using namespace std;
+#include <iostream>
+#include <algorithm>
+
+int main()
+{
+	int arr[] = {3,2,1};
+	cout << "pre_permutation\n";
+
+	do
+	{
+		cout << arr[0] << ' ' << arr[1] << ' ' << arr[2] << endl;
+	}while(pre_permutation(arr,arr+3));
+
+	int arr1[] = {1,2,3};
+	cout << "next_permutation\n";
+
+	do
+	{
+		cout << arr1[0] << ' ' << arr1[1] << ' ' << arr1[2] << endl;
+	}while(next_permutation(arr1,arr1+3));
+
+		return 0;
+}

@@ -1,0 +1,56 @@
+
+
+一：存储类型
+	1：存储持续性
+		1）自动存储持续性：函数定义中声明的变量，函数参数
+		2）静态存储持续性：函数外定义的变量，关键字static定义的变量
+		
+		3）线程存储持续性：使用thead_local修饰的变量，与所属线程有相同生命周期
+		4）动存储持续性：用new运算符分配的内存
+
+	2：auto
+		1）显示的指出变量为自动变量
+
+	3:register变量
+		使用cpu存储自动变量，提高变量访问速度
+	
+	4：静态持续变量，默认初始化为0
+		
+	链接性为外部的----全局变量
+	链接性为内部的----static修饰的全局变量
+	没有链接性的----static修饰的局部变量
+
+	5：extern--使外部文件可以使用
+
+	6:mutable
+		即使结构为const，mutable修饰的结构成员可以被修改
+	7：const修饰的全局变量的链接性为内部的
+
+二：动态内存
+	1：new
+	1)初始化
+		int *p1 = new int(6);
+		double *pd = new double(9.9);
+		struct where {double x;double y;double z;};
+		where * one = new where{1.1,2.2,3.3};
+		int * ar = new int[4] {2,3,4,5}
+
+	2)new失败时
+		出发异常：std::bad_alloc
+
+	3)定位new运算符的函数
+		头文件<new>
+		p2 = new (buffer) int[20];等
+
+
+三：名字空间
+	1：创建新的名字空间
+		namespace name{}
+	2:使用名字空间
+		using namespace name;
+		using name ::
+
+	3:未命名的名字空间
+		namespace {}
+		链接性为内部，不能在外部使用
+	4：名字空间可以嵌套使用。

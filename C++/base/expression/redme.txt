@@ -1,0 +1,152 @@
+
+	
+1 for循环
+	1）在for和括号之间加一个空格，省略函数名与括号之间的空格
+	2)c++表达式是值或值与运算符的组合，且每个表达式都有值
+
+	3)cout.setf(ios::boolalpha)函数调用设置了一个标记，表示cout显示true和false，而非1和0
+
+	4）通常定义一个const值表示数组中的元素个数
+
+	5）可以用std::代替编译指令using
+
+	6)副作用与顺序点
+		副作用：在计算表达式时对某些东西（存储在变量中的值）进行修改
+		顺序点：进入下一条语句之前，对所有的副作用都进行评估
+			语句中的分号，任何完整表达式（不是任何更大表达式的子表达式，如表达式语句中的表达式部分、while循环中检测条件的表达式）
+			前缀版本效率高于后缀版本
+	
+	7）使用==来比较两个量是否相等
+	字符串比较：strcmp(),相等返回0
+	string对象可以使用关系运算符与其他类型的字符串进行比较
+
+	8)while循环可用于编写延时
+		当计算机处理速度发生变化时，必须修改计数限制
+		clock()函数
+
+	9)类型别名
+		#define BYTE char
+		typedef typename aliaaName;
+
+2：switch语句
+	1）有些硬件/操作系统组合不会将转移序列\a解释为振铃
+
+
+	2）枚举量用作标签：switch while语句将int值提升为int类型
+		初始化枚举变量，在case后可直接使用enum的元素
+
+
+3:if else 与switch
+	1)选项涉及取值范围、浮点测试或两个变量比较，使用if else
+	2)选项全部都是整数常量，且选项超过两个，最好使用switch
+
+二：基于范围的for循环
+	显示元素：
+	for(double x:price)
+		cout << x << enddl;
+	改变元素值：
+	for(double& x:price)
+		x = x*0.80;
+	综合使用：
+	for(int x:{3,1,2})
+		cout << x << endl;
+
+三：寻混于文本输入
+	1 原始的cin输入
+		在循环中停止输入---哨兵字符。
+		cin读取char值时将忽略空格和换行符，可以使用cin.get(ch)替换，可以将空格等字符输入。（ch = cin.get(),cin.get(ch),cin.get(array,size)）
+
+	2:当输入元素类型匹配时，会
+		1）n值保持不变
+		2）不匹配的输入将被保留在输入队列中
+		3）cin对象中的一个错误标记被设置
+		4）对cin方法的调用将返回false
+	之一，此时必须重置错误标志：如下
+	if(!cin)
+	{
+		cin.clear();
+		cin.get();
+	}
+
+	cin.get();
+	cin.get();
+
+
+
+	3:继续读取实例
+		1）当输入错误内容时：
+			重置cin以介绍新的输入
+			删除错误输入
+		提示用户再输入
+		while(!(cin>>arra[i]))
+	{
+		cin.clear();
+		while(cin.get() != “\n”)
+			continue;
+		cout << "tips"
+	}
+
+
+	4:文本文件与文本io
+		1）文本文件--每个字符都存储一个字符编码的文件。输入一开始为文本
+		2）文本io---输出到文件
+			必须含头文件fstream
+			声明ofstream变量（对象）---ofstream outFile
+			指明名字空间std------------using namespace std
+			将ofstream对象与文件关联--open()方法
+				--outFile.open(filename)(open()接受一个c风格的字符串为参数，可以为字符串常量，也可为字符数组),open()打开已有文件，且接受输出时，默认将其长度截断0
+			使用close()将文件关闭
+			声明一个ofstream对象并将其与文件关联后，可以像使用cout一项使用
+		3)文本io---读取文本文件
+			所需内容与输出到文件相似
+			检查文件是否成功打开：is_open()
+				inFile.open("*.txt");
+				if(!inFile.is_open())
+					exit(EXIT_FALLURE);
+			检查是否到达文件尾：eof()
+			检查是否输出错误：fail()--获取数据失败
+			判断文件状态是否良好：good();
+		总结：
+		一：文件输出步骤
+			1）包含头文件ofstream
+			2）创建ofstream对象
+			3）将ofstream对象同文件关联
+			4）像使用cout那样使用ofstream对象
+
+四：文件尾条件
+	1：重定向
+		gofish < fishtale:程序从fishtale文件获取输入
+
+		cin使用eof() fail()判断是否到文件末尾，到达文件尾返回true,否则返回false,可以使用ctrl+z模拟文件尾(EOF表示没有字符)
+		
+		cout.put(ch)/ch = cout.put()
+	测试：int ch;
+		ch = cin.get();
+		while(ch != EOF)
+			{
+				cout.put(ch);
+				++count;
+				ch = cin.get();
+			}
+
+
+
+五：逻辑运算符
+	1：||
+		顺序点，冒号，逗号也是顺序点
+	2：&&
+		常用于由于两种不同的原因而结束的while循环
+		还可以用于设置取值范围
+	3:!
+
+	注意：|| && 优先级都低于关系运算符
+		!高于所有关系运算符与算数运算符
+
+六：字符函数库cctype
+	1:isalpha()  ispunct() isdigits() isspace()
+	isprint() isupper() isxdigit() tolower() toupper() 
+	islower() iscntrl()等
+
+七：?:
+	优点：条件运算符生成一个表达式，因此是一个值
+		可以将条件运算符嵌套在另一个条件表达式

@@ -1,0 +1,5 @@
+
+
+vector类似于string,也是一种动态数组
+
+使用：vector<typename> vt(n_elem);
